@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluring_page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+        *{
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin:0;
+        }
+        .bg{
+            background: url('https://picsum.photos/id/237/1800/1080') no-repeat center center/cover;
+            background-size: fit-content;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height:100vh;
+            z-index: -1;
+            filter: blur(0);
+        }
+        .loading_text{
+            font-size: 50px;
+            color: #fff
+        }
+    </style>
+</head>
+<body>
+    <section class = 'bg'></section>
+    <div class="loading_text">0%</div>
+    <script>
+        const loadText = document.querySelector('.loading_text')
+        const bg = document.querySelector('.bg')
+
+        let load = 0
+        let int = setInterval(bluring, 30)
+
+        function bluring(){
+            load++
+
+            if (load > 99){
+                clearInterval(int)
+            }
+            
+            loadText.innerText = `${load}%`
+            loadText.style.opacity = scale(load, 0, 100, 1, 0)
+            bg.style.filter = `blur(${scale(load, 0, 100, 30, 0)}px)`
+        }
+
+        const scale = (number, inMin, inMax, outMin, outMax) =>{
+    return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+        }
+    </script>
+</body>
+</html>
